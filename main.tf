@@ -5,6 +5,13 @@ terraform {
       version = "~> 5.0"
     }
   }
+  backend "remote" {
+    organization = "tecmilenio_devops_avanzado"
+
+    workspaces {
+      name = "tecmilenio_terraform_aws"
+    }
+  }
 }
 
 # Configure the AWS Provider
