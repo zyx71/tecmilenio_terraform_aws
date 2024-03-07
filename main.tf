@@ -32,7 +32,7 @@ resource "aws_security_group_rule" "ssh" {
   security_group_id = module.vpc.default_security_group_id
 }
 
-resource "aws_security_group_rule" "ssh" {
+resource "aws_security_group_rule" "all-traffic" {
   description       = "Tecmilenio SSH Rule Outbound"
   type              = "egress"
   from_port         = 0
