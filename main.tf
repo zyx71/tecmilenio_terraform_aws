@@ -22,26 +22,6 @@ provider "aws" {
   token = var.my-access-token
 }
 
-resource "aws_security_group_rule" "ssh" {
-  description       = "Tecmilenio SSH Rule Inbound"
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = module.vpc.default_security_group_id
-}
-
-resource "aws_security_group_rule" "all-traffic" {
-  description       = "Tecmilenio SSH Rule Outbound"
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = module.vpc.default_security_group_id
-}
-
 data "aws_ami" "example" {
   most_recent = true
   owners      = ["amazon"]
@@ -60,6 +40,16 @@ data "aws_ami" "example" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+}
+
+resource "aws_security_group_rule" "ssh" {
+  description       = "Tecmilenio SSH Rule Inbound"
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.vpc.default_security_group_id
 }
 
 module "ec2_instance" {
