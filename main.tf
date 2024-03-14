@@ -65,6 +65,8 @@ module "ec2_instance" {
   key_name = module.key_pair.key_pair_name
   associate_public_ip_address = true
   subnet_id = module.vpc.public_subnets[0]
+  user_data = "sudo apt update && sudo apt install -y python2 && sudo ln -s /usr/bin/python2 /usr/bin/python"
+
 
   tags = {
     Terraform   = "true"
@@ -99,5 +101,12 @@ module "vpc" {
     Environment = "dev"
   }
 }
-
+resource "aws_security_group_rule" "example" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = "sg-00682366239ca95fe"
+}
 
